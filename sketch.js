@@ -21,12 +21,12 @@ function setup() {
   
   background_ = createSprite(300, 120, 20, 20);
   background_.addImage(backImage);
-  background_.velocityX = -3;
   background_.x = background_.width/2;
   
   monkey = createSprite(100, 240, 20, 20);
   monkey.addAnimation("monkeyimage",monkeyanime);
   monkey.scale = 0.10;
+  monkey.velocityX = 3;
   
   ground = createSprite(300, 290, 600, 10);
   ground.visible = false;
@@ -39,6 +39,11 @@ function setup() {
 
 function draw() {
   background(255);
+
+  camera.position.x = monkey.x + 200;
+  camera.position.y = displayHeight/2 -200;
+
+  ground.x = monkey.x;
   
   if(background_.x < 0){
     background_.x = background_.width/2;
@@ -80,15 +85,15 @@ function draw() {
   
   stroke("white");
   textSize(20);
-  fill("white");
-  text("SCORE : " + score, 500, 50);
+  fill("black");
+  text("SCORE : " + score, monkey.x + 300, 50);
   
   //console.log(monkey.y)
 }
 function spawnObstacle(){
   if(frameCount % 300 === 0){
-    var obstacle = createSprite(displayWidth/2, 270, 40, 40);
-    obstacle.velocityX = -6;
+    var obstacle = createSprite(monkey.x + 500, 270, 40, 40);
+    obstacle.velocityX = -3;
     obstacle.lifetime = 150;
     obstacleGroup.add(obstacle);
     obstacle.scale = 0.15;
@@ -97,9 +102,9 @@ function spawnObstacle(){
 
 function spawnBanana(){
   if(frameCount % 80 === 0){
-    var banana = createSprite(displayWidth/2, 270, 40, 40);
+    var banana = createSprite(monkey.x + 500, 270, 40, 40);
     banana.y = Math.round(150, 200);
-    banana.velocityX = -5;
+    banana.velocityX = -2;
     banana.lifetime = 120;
     bananaGroup.add(banana);
     banana.scale = 0.05 ;
